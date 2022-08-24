@@ -31,11 +31,9 @@ with open('phrase_list.txt') as csv_file:
 
 
 
-sleep_time = 15
-next_phrase = -1 # -1 means random
 
 
-def typePhrase(phrase):
+def typePhrase(phrase, sleep_time, next_phrase):
     if phrase.repeat != 0:
         pyautogui.typewrite(phrase.word)
         sleep_time = phrase.timer
@@ -48,9 +46,12 @@ def typePhrase(phrase):
     else:
         sleep_time = 1
         next_phrase = -1
+    return sleep_time, next_phrase
 
 
 def print_hi(name):
+    sleep_time = 15
+    next_phrase = -1  # -1 means random
     phrase = phraseHolder("")
     time.sleep(sleep_time)  # Waits 15 seconds before starting
     while 1 == 1:
@@ -62,8 +63,9 @@ def print_hi(name):
             except:
                 phrase = random.choice(random_words)
 
-        typePhrase(phrase)
-        time.sleep(sleep_time + random.randint(0, 9))
+        sleep_time, next_phrase = typePhrase(phrase, sleep_time, next_phrase)
+        sleepy = sleep_time + random.randint(0, 9)
+        time.sleep(sleepy)
 
 
 #
